@@ -1,0 +1,39 @@
+{
+  "name": "cdrui-css",
+  "version": "1.0.0",
+  "description": "CSS used for the CDR UI",
+  "main": "index.js",
+  "dependencies": {
+    "autoprefixer": "^9.4.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel": "^6.23.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.18.8"
+  },
+  "scripts": {
+    "sass": "gulp sass-compile",
+    "auto": "gulp autoprefix",
+    "min": "gulp minify",
+    "babel": "gulp babel",
+    "watch-sass": "nodemon --watch 'css/_sass/*' -e scss --exec 'npm run sass & npm run auto'",
+    "watch-js": "nodemon --watch 'js/dev/*' -e js --exec 'npm run babel'",
+    "watch": "npm run watch-sass & npm run watch-js",
+    "build": "npm run sass & npm run auto & npm run run min",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emajeru",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib"
+  }
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while read oldrev newrev refname
+do
+	mkdir "/Users/edisonhanchell/Desktop/$(git rev-parse --symbolic --abbrev-ref $refname)-$(date).txt"
+done

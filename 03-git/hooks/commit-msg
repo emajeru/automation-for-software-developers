@@ -1,0 +1,6 @@
+#!/bin/sh
+
+test "1" = "$(grep -c 'Signed-off-by:' "$1")" || {
+	echo >&2 No use of the Signed-off-by key
+	exit 1
+}

@@ -1,0 +1,14 @@
+---
+- name: Add User
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+    - name: Create User Login
+      user:
+        name: "{{ username }}"
+        password: "{{ password | password_hash('sha512') }}"
+        groups: sudo
+        shell: /bin/bash
+        state: present
+...

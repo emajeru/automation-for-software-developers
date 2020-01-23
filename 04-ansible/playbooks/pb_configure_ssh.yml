@@ -1,0 +1,36 @@
+---
+- name: Configure SSH
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+    - name: Back SSHD Config
+      fetch:
+        src: /etc/ssh/sshd_config
+        dest: ../config_backups
+      when: backup == True
+
+    - name: Disable Password Authentication
+      lineinfile:
+        dest=/etc/ssh/sshd_config
+        regexp='^PasswordAuthentication'
+        line="PasswordAuthentication no"
+        state=present
+        backup=yes
+
+    - name: Disable Root Login
+      lineinfile:
+        dest=/etc/ssh/sshd_config
+        regexp='^PermitRootLogin'
+        line="PermitRootLogin no"
+        state=present
+        backup=yes
+      notify:
+        - restart_ssh
+
+  handlers:
+    - name: restart_ssh
+      service:
+        name=sshd
+        state=restarted
+...

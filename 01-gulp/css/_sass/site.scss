@@ -1,0 +1,18 @@
+$color1: #ffffff;
+$color2: #000000;
+
+body {
+  background: $color1;
+}
+
+#users {
+  width: 3rem;
+  height: 1rem;
+  background: $color2;
+
+  .user {
+    width: 1rem;
+    height: 1rem;
+    background: $color1;
+  }
+}

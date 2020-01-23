@@ -1,0 +1,31 @@
+---
+- name:
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+    - name: allow_ssh
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        source: '{{ item }}'
+        destination_port: '22'
+        ctstate: NEW
+        syn: match
+        jump: LIMIT
+      loop:
+        - 192.168.1.2/32
+        - 192.168.1.3/32
+    - name: allow_web
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        source: '{{ item }}'
+        destination_port: '80'
+        ctstate: NEW
+        syn: match
+        jump: ACCEPT
+      loop:
+        - 192.168.1.2/32
+        - 192.168.1.3/32
+...

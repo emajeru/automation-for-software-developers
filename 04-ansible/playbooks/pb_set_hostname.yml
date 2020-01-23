@@ -1,0 +1,41 @@
+---
+- name: Initialize Server
+  hosts: all
+  gather_facts: yes
+  become: true
+  tasks:
+    - name: Disable hostname reset on reboot
+      replace:
+        path: /etc/cloud/cloud.cfg
+        regexp: "^preserve_hostname: false$"
+        replace: "preserve_hostname: true"
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Configure Hostname
+      hostname: name={{ sys_name }}
+      when: sys_name is defined
+
+    - name: Configure consistent hostname on Ubuntu for {{ sys_name }}
+      lineinfile:
+        dest=/etc/hosts
+        line='127.0.0.1\t{{ sys_name }}'
+        insertafter="^127\.0\.0\.1.*localhost$"
+        state=present
+      when:
+        - sys_name is defined
+        - fq_sys_name is not defined
+
+    - name: Configure consistent hostname on Ubuntu for {{ fq_sys_name }}
+      lineinfile:
+        dest=/etc/hosts
+        line='127.0.0.1\t{{ fq_sys_name }}\t{{ sys_name }}'
+        insertafter="^127\.0\.0\.1.*localhost$"
+        state=present
+      when:
+        - sys_name is defined
+        - fq_sys_name is defined
+    
+    - name: Reboot to confirm changes
+      reboot:
+        msg: "Rebooting server {{ sys_name }}"   
+...

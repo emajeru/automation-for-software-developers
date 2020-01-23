@@ -1,0 +1,11 @@
+---
+- name: 
+  hosts: all
+  gather_facts: no
+  become: false
+  tasks:
+    - name: Add the ssh key
+      authorized_key: user={{ username }} 
+                      key="{{ lookup('file','/Users/$USERNAME/.ssh/id_rsa.pub') }}"
+                      state=present
+...

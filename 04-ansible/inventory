@@ -1,0 +1,2 @@
+192.168.1.2 sys_name=server1 fq_sys_name="{{ sys_name }}.domain.com"
+192.168.1.3 sys_name=server2 fq_sys_name="{{ sys_name }}.domain.com"
